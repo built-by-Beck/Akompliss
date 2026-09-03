@@ -20,37 +20,43 @@ controls tone only, never tool permissions. See `PROJECT_RULES.md` for the full 
 
 ## Current phase
 
-Phase 0 — Repository and Agent Foundation. In progress.
+Phase 0 COMPLETE. Phase 1 (Local Model Benchmark) not started — begin in a fresh session.
 
-## What was just completed
+## What was just completed (Phase 0)
 
-- Git repo initialized, remote `git@github.com:built-by-Beck/Akompliss.git`, branch `main`.
-- `CLAUDE.md` added.
-- PBRD state files created (this file, `PROJECT_RULES.md`, `BUILD_PLAN.md`,
-  `BUILD_STATUS.md`, `lessons_learned.md`, `error_log.jsonl`, `plan.md`).
-
-## Files changed most recently
-
-`PROJECT_RULES.md`, `BUILD_PLAN.md`, `BUILD_STATUS.md`, `agent-info.md`,
-`lessons_learned.md`, `error_log.jsonl`, `plan.md`, `docs/decisions/0001-initial-tech-stack.md`.
+- pnpm/TypeScript monorepo: root `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`
+  + project references, `biome.json`, `vitest.workspace.ts`.
+- Foundation files: `.env.example`, `docker-compose.yml` (only `api` active; llama.cpp /
+  Speaches commented for later phases), `.nvmrc`, `.editorconfig`,
+  `.github/workflows/ci.yml`.
+- Directory skeleton across `apps/`, `services/`, `packages/`, `infrastructure/`,
+  `firebase/`, `scripts/`, `tests/`, `docs/` with placeholder READMEs / `.gitkeep`.
+- `services/api` (`@akom/api`): Fastify `buildServer()` + `GET /health`, `src/index.ts`
+  entrypoint, `test/health.test.ts` (Vitest, passing), `Dockerfile`.
+- README got a "Development setup" section. ADR 0001 records the stack choices.
 
 ## What works
 
-- Nothing runs yet. Docs and process only.
+- `pnpm install | lint | typecheck | test | build` all pass.
+- `node services/api/dist/index.js` → `GET /health` returns
+  `{"status":"ok","uptime":<n>,"version":"0.0.0"}`.
+- `docker compose config` is valid.
 
 ## What does not work / not built
 
-- No package.json / build tooling / services yet (being added in Phase 0 Part B).
-- Everything Phase 1+ (model benchmark, llama.cpp, personalities, STT, TTS, Firebase,
-  mobile app).
+- Everything Phase 1+: model benchmark, llama.cpp integration + provider interfaces,
+  personality packages, STT, TTS, conversation engine, OpenClaw, memory, tools, Firebase,
+  Expo mobile app.
+- `services/api/test/` files are not covered by `tsc -b` typecheck (outside `rootDir`).
 
 ## Decisions locked (change only via ADR + discussion)
 
-- Package manager: pnpm workspaces. Language: TypeScript strict. Node >= 22.
-- Lint + format: Biome. Tests: Vitest.
-- API framework: Fastify.
-- Mobile Expo app deferred to Phase 12 (`apps/mobile/` is a placeholder until then).
+- pnpm workspaces · TypeScript strict · Node >= 22.
+- Biome (lint+format) · Vitest (tests) · Fastify (API).
+- Mobile Expo app deferred to Phase 12 (`apps/mobile/` is a placeholder).
 - LLM runtime: llama.cpp serving GGUF over its OpenAI-compatible API.
+- pnpm build scripts are allow-listed in `pnpm-workspace.yaml` (`allowBuilds`) for
+  `@biomejs/biome` and `esbuild`.
 
 ## Must NOT change without discussion
 
@@ -61,6 +67,8 @@ Phase 0 — Repository and Agent Foundation. In progress.
 
 ## What the next agent should do
 
-Finish Phase 0 Part B (monorepo scaffold + health endpoint + tests), run the verification
-block in `plan.md`, update the state files, commit, push. Then stop — Phase 1 is a fresh
-session.
+Start **Phase 1 — Local Model Benchmark**. Read the "PHASE 1" section of
+`aKom-Pliss — Master Build Plan.md`, rewrite `plan.md` from the Cursor Phase Execution
+Template, build the permanent prompt suite under `tests/model-benchmark/`, run the
+candidates, write `docs/model-benchmark.md`, and select `PRIMARY_MODEL`. Do not start
+llama.cpp integration (Phase 2) or the mobile app.

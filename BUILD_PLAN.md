@@ -8,8 +8,8 @@ active.
 
 | # | Name | Status |
 |---|---|---|
-| 0 | Repository and Agent Foundation | ACTIVE |
-| 1 | Local Model Benchmark | TODO |
+| 0 | Repository and Agent Foundation | DONE |
+| 1 | Local Model Benchmark | ACTIVE |
 | 2 | LLM Runtime Service (llama.cpp + local text API) | TODO |
 | 3 | Personality Engine | TODO |
 | 4 | Speech-to-Text Foundation | TODO |

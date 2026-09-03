@@ -1093,3 +1093,46 @@ The long-term goal is simple:
 Not another chatbot.
 
 An aKom-Pliss.
+
+---
+
+# Development setup
+
+**Prerequisites:** Node >= 22 and pnpm (`corepack enable`, or `npm i -g pnpm`).
+
+```bash
+pnpm install
+pnpm lint        # Biome lint + format check
+pnpm typecheck   # tsc project references
+pnpm test        # Vitest across the workspace
+pnpm build       # compile all packages
+```
+
+Run the API locally:
+
+```bash
+cp .env.example .env
+pnpm --filter @akom/api dev     # then: curl localhost:3000/health
+```
+
+## How this repo is organised
+
+This is a pnpm monorepo built in phases (`Plan → Build → Review/Test → Document`). Before
+changing code, read `agent-info.md` and `plan.md`; `PROJECT_RULES.md` has the full
+workflow, architecture principles, and the token-conscious reading protocol.
+`aKom-Pliss — Master Build Plan.md` is the authoritative roadmap. Current phase and status
+live in `BUILD_STATUS.md`.
+
+| Path | What |
+|---|---|
+| `services/api` | Lightweight Fastify API (the only running code today) |
+| `services/assistant` | Conversation engine + `AssistantRuntime` (Phase 6–7) |
+| `services/speech` | Local speech stack config via Speaches (Phase 4) |
+| `packages/contracts` | Provider interfaces (Phase 2) |
+| `packages/personalities` | Personality config packages (Phase 3) |
+| `packages/providers` | Concrete provider adapters (Phase 2+) |
+| `apps/mobile` | Expo / React Native app (Phase 12) |
+| `infrastructure/` | Docker / llama.cpp / Speaches / LiveKit configs |
+| `firebase/` | Auth + Firestore rules + functions (Phase 11) |
+| `tests/model-benchmark` | Permanent LLM benchmark suite (Phase 1) |
+| `docs/decisions` | Architecture Decision Records |

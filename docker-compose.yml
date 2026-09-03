@@ -1,0 +1,30 @@
+# Development stack for aKom-Pliss.
+# Only the API service is defined in Phase 0. The commented services are
+# added in later phases as their runtimes are integrated.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: "3000"
+      LOG_LEVEL: info
+    ports:
+      - "3000:3000"
+
+  # --- Phase 2: local LLM runtime ---
+  # llama-cpp:
+  #   image: ghcr.io/ggml-org/llama.cpp:server
+  #   command: ["-m", "/models/model.gguf", "--host", "0.0.0.0", "--port", "8080"]
+  #   volumes:
+  #     - ./infrastructure/llama/models:/models
+  #   ports:
+  #     - "8080:8080"
+
+  # --- Phase 4: speech (Speaches / faster-whisper / Kokoro) ---
+  # speaches:
+  #   image: ghcr.io/speaches-ai/speaches:latest
+  #   ports:
+  #     - "8000:8000"
