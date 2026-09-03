@@ -4,12 +4,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-This repo currently contains **only planning documentation** — no code, no `package.json`, no build tooling yet. The two source-of-truth documents are:
+Phase 0 complete: a pnpm/TypeScript monorepo with Biome, Vitest, CI, and a single running
+package (`services/api`, a Fastify `GET /health`). Everything Phase 1+ (model benchmark,
+llama.cpp, personalities, STT/TTS, Firebase, mobile app) is not built yet.
 
-- `README.md` — product vision for **aKom-Pliss**, a mobile-first AI everyday assistant with a personality system (Casual / Savage / Argumentative / Roast Me / One-Upper), local-first voice, long-term memory, and tools.
-- `aKom-Pliss — Master Build Plan.md` — the authoritative roadmap: Phase 0 through Phase 23, technology decisions, repo layout, and the PBRD workflow. **Read this before starting any implementation work.**
+Source-of-truth documents:
 
-When code is added, update this file with the real build/lint/test commands.
+- `agent-info.md` + `plan.md` — read these first, every session. Current state and the
+  active phase's task list.
+- `PROJECT_RULES.md` — PBRD workflow, architecture principles, and the token-conscious
+  reading protocol (don't re-read everything each turn).
+- `BUILD_STATUS.md` — current phase and test status. `BUILD_PLAN.md` — phase index.
+- `aKom-Pliss — Master Build Plan.md` — authoritative roadmap (Phases 0–23). Read only the
+  active phase's section.
+- `README.md` — product vision + "Development setup".
+- `docs/decisions/` — ADRs.
+
+## Commands
+
+```bash
+pnpm install
+pnpm lint         # biome check .   (pnpm format = check --write)
+pnpm typecheck    # tsc -b --noEmit
+pnpm test         # vitest run across the workspace
+pnpm build        # tsc -b
+pnpm --filter @akom/api dev     # run the API (needs .env; GET localhost:3000/health)
+```
+
+Run a single test: `pnpm --filter @akom/api exec vitest run test/health.test.ts` (or
+`vitest run -t "<name>"`). Prereq: Node >= 22 and pnpm (`corepack enable` or
+`npm i -g pnpm`).
 
 ## Development workflow: PBRD
 
