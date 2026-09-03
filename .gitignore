@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+.next/
+.expo/
+.expo-shared/
+web-build/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+google-services.json
+GoogleService-Info.plist
+serviceAccountKey*.json
+firebase-debug.log
+.firebase/
+
+# AI assets (large binaries live in Hugging Face Storage Buckets, not git)
+*.gguf
+*.bin
+*.safetensors
+*.onnx
+*.pt
+*.ckpt
+models/
+checkpoints/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Testing / coverage
+coverage/
+.nyc_output/
+
+# Native
+apps/mobile/ios/Pods/
+apps/mobile/android/.gradle/
+apps/mobile/android/app/build/
+
+# Runtime
+*.pid
+*.seed
+tmp/
+.cache/
